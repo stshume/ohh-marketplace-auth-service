@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+		http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="0-1" author="Simphiwe Tshume" context="test, local">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists schemaName="ooh_db" tableName="user" />
+            </not>
+        </preConditions>
+
+        <createTable tableName="user" schemaName="ooh_db" remarks="Table for storing requests for users">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" />
+            </column>
+            <column name="email" type="varchar(50)">
+                <constraints nullable="false" />
+            </column>
+            <column name="email_verified" type="boolean">
+                <constraints nullable="false" />
+            </column>
+            <column name="phone_number" type="varchar(20)">
+                <constraints nullable="false" />
+            </column>
+            <column name="phone_number_verified" type="boolean">
+                <constraints nullable="false" />
+            </column>
+            <column name="roles" type="varchar(20)">
+                <constraints nullable="false" />
+            </column>
+            <column name="password" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="reset_token" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="reset_token_expiration" type="timestamp with time zone">
+                <constraints nullable="true" />
+            </column>
+            <column name="locked" type="boolean">
+                <constraints nullable="false" />
+            </column>
+            <column name="locked_at" type="timestamp with time zone">
+                <constraints nullable="true" />
+            </column>
+            <column name="deleted" type="boolean">
+                <constraints nullable="false" />
+            </column>
+            <column name="created_at" type="timestamp with time zone" defaultValue="NOW()">
+                <constraints nullable="false" />
+            </column>
+            <column name="updated_at" type="timestamp with time zone">
+                <constraints nullable="true" />
+            </column>
+        </createTable>
+
+        <addPrimaryKey constraintName="pk_user"
+                       schemaName="ooh_db"
+                       tableName="user"
+                       columnNames="id"
+                       clustered="true"
+                       validate="true"/>
+
+        <createIndex indexName="idx_user"
+                     schemaName="ooh_db"
+                     tableName="user"
+                     clustered="false"
+                     unique="true">
+            <column name="id" />
+        </createIndex>
+
+        <createIndex indexName="idx_user_email"
+                     schemaName="ooh_db"
+                     tableName="user"
+                     clustered="false"
+                     unique="true">
+            <column name="email" />
+        </createIndex>
+
+        <createIndex indexName="idx_user_reset_token"
+                     schemaName="ooh_db"
+                     tableName="user"
+                     clustered="false">
+            <column name="reset_token" />
+        </createIndex>
+
+        <createIndex indexName="idx_user_locked"
+                     schemaName="ooh_db"
+                     tableName="user"
+                     clustered="false">
+            <column name="locked" />
+        </createIndex>
+
+        <createIndex indexName="idx_user_deleted"
+                     schemaName="ooh_db"
+                     tableName="user"
+                     clustered="false">
+            <column name="deleted" />
+        </createIndex>
+
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,6 @@
+# This is the default config used by the service
+spring:
+  application:
+    name: @project.artifactId@
+  profiles:
+    active: local

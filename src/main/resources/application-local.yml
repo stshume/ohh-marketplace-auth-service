@@ -1,0 +1,67 @@
+spring:
+  liquibase:
+    password: ${spring.datasource.password}
+    user: ${spring.datasource.username}
+    url: ${spring.datasource.url}
+    enabled: true
+    change-log: classpath:db/db.changelog-master.yaml
+    default-schema: ooh_db
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=ooh_db
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 2
+  main:
+    allow-circular-references: true
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 20
+        order_inserts: true
+        order_updates: true
+        id:
+          optimizer:
+            pooled:
+              preferred: pooled-lo
+  mail:
+    enabled: false
+    host: sandbox.smtp.mailtrap.io
+    port: 2525
+    properties:
+      mail:
+        default-encoding: UTF-8
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+jwt:
+  public:
+    key: classpath:./keystore/public-key.pem
+  private:
+    key: classpath:./keystore/private-pkcs8.pem
+
+#debug logs
+logging:
+  level:
+    org:
+      springframework:
+        security: debug
+service:
+  desensitise: false
+  apiaudit:
+    logging: true
+# App Properties
+bezkoder:
+  app:
+    jwtSecret: ======================BezKoder=Spring===========================
+    jwtExpirationMs: 86400000
